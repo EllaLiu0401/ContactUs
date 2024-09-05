@@ -5,10 +5,12 @@ const cors = require("cors");
 const app = express();
 const port = 9000;
 
-// CORS for react app, assuming port 9000
+app.options("/contact", cors());
+// CORS for react app
 app.use(
   cors({
-    origin: `http://localhost:${port}`,
+    origin: "http://localhost:3000",
+    methods: "GET,POST",
     credentials: true,
   })
 );
@@ -19,7 +21,7 @@ app.use(express.json());
 const db = new sqlite3.Database("./contacts.db");
 
 // create new contact
-app.post("./contact", (req, res) => {
+app.post("/contact", (req, res) => {
   const { first_name, last_name, email, phone, message } = req.body;
 
   if (!first_name || !last_name || !email || !phone || !message) {

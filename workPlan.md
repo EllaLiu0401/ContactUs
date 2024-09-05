@@ -6,7 +6,7 @@
 4. Contact Unit test done 05/09/2024
 5. Define Contact API routes done 05/09/2024
 6. Contact API test done 05/09/2024
-7. Contact page develop
+7. Contact page develop 06/09/2024
 8. Contact page responsive
 9. Contact List Unit test
 10. Define Contact List API routes

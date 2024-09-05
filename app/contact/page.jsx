@@ -1,7 +1,6 @@
 "use client";
 import ContactDetail from "./ContactDetail";
 import ContactForm from "./ContactForm";
-import ContactThankyou from "./ContactThankyou";
 export default function ContactUs() {
   return (
     <div className="flex flex-col md:flex-row justify-between items-start gap-7 px-36 py-6">
@@ -9,7 +8,7 @@ export default function ContactUs() {
         <ContactDetail />
       </div>
       <div className="w-full md:w-1/2">
-        <ContactThankyou />
+        <ContactForm />
       </div>
     </div>
   );
