@@ -21,7 +21,7 @@ app.use(express.json());
 const db = new sqlite3.Database("./contacts.db");
 
 // create new contact
-app.post("/contact", (req, res) => {
+app.post("/contacts", (req, res) => {
   const { first_name, last_name, email, phone, message } = req.body;
 
   if (!first_name || !last_name || !email || !phone || !message) {
@@ -39,6 +39,53 @@ app.post("/contact", (req, res) => {
       res.status(201).json({ id: this.lastID });
     }
   );
+});
+
+// get all contacts
+app.get("/contacts", (req, res) => {
+  const sql = "SELECT * FROM Contacts";
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json({
+      data: rows,
+    });
+  });
+});
+
+// mark contact as verified with specific id
+app.put("/contacts/:id/verify", (req, res) => {
+  const { id } = req.params;
+
+  const sql = `UPDATE Contacts SET verified = 1, updated_at = CURRENT_TIMESTAMP WHERE id = ?`;
+
+  db.run(sql, [id], function (err) {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Contact not found" });
+    }
+    res.json({ message: "Contact marked as verified" });
+  });
+});
+
+// delete contact with specific id
+app.delete("/contacts/:id", (req, res) => {
+  const { id } = req.params;
+
+  const sql = `DELETE FROM Contacts WHERE id = ?`;
+
+  db.run(sql, [id], function (err) {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Contact not found" });
+    }
+    res.json({ message: "Contact deleted successfully" });
+  });
 });
 
 app.listen(port, () => {
