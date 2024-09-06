@@ -58,31 +58,26 @@ export default function ContactForm() {
     e.preventDefault();
     if (!formData.firstName) {
       firstNameRef.current?.focus();
-      console.log("First name is required");
       return;
     }
 
     if (!formData.lastName) {
       lastNameRef.current?.focus();
-      console.log("Last name is required");
       return;
     }
 
     if (!formData.email || emailError) {
       emailRef.current?.focus();
-      console.log("Valid email is required");
       return;
     }
 
     if (!formData.phone || phoneError) {
       phoneRef.current?.focus();
-      console.log("Valid phone number is required");
       return;
     }
 
     if (!formData.message) {
       messageRef.current?.focus();
-      console.log("Message is required");
       return;
     }
     try {

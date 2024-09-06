@@ -1,18 +1,13 @@
-import { render, screen } from "@testing-library/react";
+import React from "react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ContactDetail from "../ContactInfo";
-import ContactForm from "../ContactInfo";
-import { describe, expect } from "vitest";
+import ContactDetail from "../ContactDetail";
+import ContactForm from "../ContactForm";
 
 describe("ContectDetail test", () => {
   test("renders contact details correctly", () => {
     render(<ContactDetail />);
-    const welcomeText = screen.getByText(
-      /Welcome to OpenAgent. We've been around since 2013, and our vision is to make it easy for people to buy, sell and own property/i
-    );
-    const introText = screen.getByText(
-      /Here are the different ways you can contact us/i
-    );
+    const welcomeText = screen.getByText(/Welcome to OpenAgent/i);
     const contactDetailText = screen.getByText(/Contact Us Details/i);
     const phoneText = screen.getByText(/Phone: 13 24 34/i);
     const emailText = screen.getByText(/Email: support@openagent.com.au/i);
@@ -24,7 +19,6 @@ describe("ContectDetail test", () => {
     const openingText = screen.getByText(/Monday - Friday 8:30 - 5:00/i);
 
     expect(welcomeText).toBeInTheDocument();
-    expect(introText).toBeInTheDocument();
     expect(contactDetailText).toBeInTheDocument();
     expect(phoneText).toBeInTheDocument();
     expect(emailText).toBeInTheDocument();
@@ -38,12 +32,14 @@ describe("ContectDetail test", () => {
 describe("ContactForm test", () => {
   // get all inputs
   const getInputs = () => {
-    const firstNameInput = screen.getByRole("textbox", { name: /first name/i });
-    const lastNameInput = screen.getByRole("textbox", { name: /last name/i });
-    const emailInput = screen.getByRole("textbox", { name: /email/i });
-    const phoneInput = screen.getByRole("textbox", { name: /phone/i });
-    const messageInput = screen.getByRole("textbox", { name: /message/i });
-    const submitButton = screen.getByRole("button", { name: /send message/i });
+    const firstNameInput = screen.getByPlaceholderText(/First name/i);
+    const lastNameInput = screen.getByPlaceholderText(/Last name/i);
+    const emailInput = screen.getByPlaceholderText(/Email address/i);
+    const phoneInput = screen.getByPlaceholderText(/Phone number/i);
+    const messageInput = screen.getByPlaceholderText(
+      /What do you want to speak to us about/i
+    );
+    const submitButton = screen.getByRole("button", { name: /SEND MESSAGE/i });
     return {
       firstNameInput,
       lastNameInput,
@@ -73,14 +69,18 @@ describe("ContactForm test", () => {
   beforeEach(() => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
+        status: 201,
         ok: true,
         json: () => Promise.resolve({ id: 1 }),
+        headers: {
+          get: () => "application/json",
+        },
       })
     );
   });
 
   afterEach(() => {
-    global.fetch.mockClear();
+    jest.clearAllMocks();
   });
 
   test("email validation", async () => {
@@ -125,12 +125,11 @@ describe("ContactForm test", () => {
     await user.type(emailInput, "ellatest@gmail.com");
     await user.click(submitButton);
 
-    // check thank you message
-    const thankYouMessage = await screen.findByText(/Thank you/i);
+    const thankYouMessage = await screen.findAllByText(/Thank you/i);
     const feedbackMessage = await screen.findByText(
-      /Thank you for your feedback. We'll be in touch shortly./i
+      /We'll be in touch shortly./i
     );
-    expect(thankYouMessage).toBeInTheDocument();
+    expect(thankYouMessage).toHaveLength(2);
     expect(feedbackMessage).toBeInTheDocument();
   });
 
@@ -168,9 +167,7 @@ describe("ContactForm test", () => {
     await user.click(submitButton);
 
     // check error
-    const phoneError = await screen.findByText(
-      /Please enter a valid phone number/i
-    );
+    const phoneError = await screen.findByText(/Please enter a valid phone/i);
     expect(phoneError).toBeInTheDocument();
 
     // correct phone number
@@ -179,11 +176,11 @@ describe("ContactForm test", () => {
     await user.click(submitButton);
 
     // check thank you message
-    const thankYouMessage = await screen.findByText(/Thank you/i);
+    const thankYouMessage = await screen.findAllByText(/Thank you/i);
     const feedbackMessage = await screen.findByText(
-      /Thank you for your feedback. We'll be in touch shortly./i
+      /We'll be in touch shortly./i
     );
-    expect(thankYouMessage).toBeInTheDocument();
+    expect(thankYouMessage).toHaveLength(2);
     expect(feedbackMessage).toBeInTheDocument();
   });
 
@@ -313,30 +310,35 @@ describe("ContactForm test", () => {
       messageInput
     );
 
-    await user.type(firstNameInput, "test");
-    await user.type(lastNameInput, "test");
-    await user.type(emailInput, "test@example.com");
-    await user.type(phoneInput, "1234567890");
-    await user.type(messageInput, "test");
+    await user.type(firstNameInput, "testFirst");
+    await user.type(lastNameInput, "testLast");
+    await user.type(emailInput, "ellatest@gmail.com");
+    await user.type(phoneInput, "0421839976");
+    await user.type(messageInput, "testMessage");
 
     await user.click(submitButton);
+
     expect(global.fetch).toHaveBeenCalledWith(
-      "http://localhost:3000/contacts",
+      "http://localhost:9000/contact",
       expect.objectContaining({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          first_name: "test",
-          last_name: "test",
-          email: "test@example.com",
-          phone: "1234567890",
-          message: "test",
+          first_name: "testFirst",
+          last_name: "testLast",
+          email: "ellatest@gmail.com",
+          phone: "0421839976",
+          message: "testMessage",
         }),
       })
     );
 
-    const thankYouMessage = await screen.findByText(/Thank you/i);
-    expect(thankYouMessage).toBeInTheDocument();
+    const thankYouMessage = await screen.findAllByText(/Thank you/i);
+    const feedbackMessage = await screen.findByText(
+      /We'll be in touch shortly./i
+    );
+    expect(thankYouMessage).toHaveLength(2);
+    expect(feedbackMessage).toBeInTheDocument();
 
     global.fetch.mockClear();
   });

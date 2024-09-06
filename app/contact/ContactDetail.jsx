@@ -11,7 +11,7 @@ export default function ContactDetail() {
         is to make it easy for people to buy, sell and own property.
       </p>
       <p className="text-base font-medium mb-4">
-        Here are the different ways you can contact us{" "}
+        Here are the different ways you can contact us
       </p>
       <ContactInfo title="Contact Us Details">
         <p className="text-base mb-1">Phone: 13 24 34</p>
