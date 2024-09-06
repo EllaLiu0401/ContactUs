@@ -5,7 +5,7 @@ import ContactDetail from "../ContactDetail";
 import ContactForm from "../ContactForm";
 
 describe("ContectDetail test", () => {
-  test("renders contact details correctly", () => {
+  test("render contact details correctly", () => {
     render(<ContactDetail />);
     const welcomeText = screen.getByText(/Welcome to OpenAgent/i);
     const contactDetailText = screen.getByText(/Contact Us Details/i);
