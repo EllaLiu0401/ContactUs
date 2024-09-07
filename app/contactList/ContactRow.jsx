@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../utilities/Button";
 
 function ContactRowContent({ children, width }) {
@@ -11,7 +11,42 @@ function ContactRowContent({ children, width }) {
     </td>
   );
 }
-function ContactRow({ contact, isLast }) {
+function ContactRow({ contact, isLast, onDelete }) {
+  const [isVerified, setIsVerified] = useState(contact.verified);
+
+  // handle verification
+  const handleVerify = () => {
+    fetch(`http://localhost:9000/contacts/${contact.id}/verify`, {
+      method: "PUT",
+    })
+      .then((response) => {
+        if (response.ok) {
+          setIsVerified(true);
+        } else {
+          console.error("Failed to verify contact");
+        }
+      })
+      .catch((error) => {
+        console.error("Error verifying contact:", error);
+      });
+  };
+
+  // handle delete
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:9000/contacts/${contact.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        onDelete(contact.id);
+      }
+    } catch (error) {
+      console.error("Error deleting contact:", error);
+    }
+  };
   return (
     <tr
       className={`bg-white ${
@@ -30,15 +65,23 @@ function ContactRow({ contact, isLast }) {
         } px-8  align-middle `}
       >
         <div className="flex justify-center items-center gap-2">
-          <Button width="w-36" height="py-1">
-            {" "}
-            Verify
+          <Button
+            width="w-48"
+            height="py-1"
+            onClick={handleVerify}
+            hbgcolor={isVerified ? "" : "hover:bg-grenen-700"}
+            bgcolor={isVerified ? "bg-gray-200" : "bg-green-600"}
+            disabled={isVerified}
+            textColor={isVerified ? "text-black" : ""}
+          >
+            {isVerified ? "Verified" : "Verify"}
           </Button>
           <Button
-            width="w-36"
+            width="w-44"
             bgcolor="bg-red-600"
             hbgcolor="hover:bg-red-700"
             height="py-1"
+            onClick={handleDelete}
           >
             Delete
           </Button>
