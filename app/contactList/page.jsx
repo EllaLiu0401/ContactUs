@@ -16,7 +16,9 @@ export default function ContactList() {
   }, []);
   return (
     <div className="px-6 md:px-16 lg:px-24 xl:px-36 py-6 ">
-      <h1 className="text-4xl text-left font-bold py-6">Contact List</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl text-left font-bold py-6 ">
+        Contact List
+      </h1>
       <ContactTable contacts={contacts} />
     </div>
   );

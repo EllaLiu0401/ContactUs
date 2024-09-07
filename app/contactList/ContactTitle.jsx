@@ -3,7 +3,7 @@ import React from "react";
 function ContactTitle({ children, width }) {
   return (
     <th
-      className={`text-base font-bold mb-6  text-center py-2  whitespace-nowrap ${width} border-stone-400`}
+      className={`text-base sm:text-sm md:text-lg font-bold mb-6  text-center py-2  whitespace-nowrap ${width} border-stone-400`}
     >
       {children}
     </th>

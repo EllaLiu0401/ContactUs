@@ -5,7 +5,7 @@ import Button from "../utilities/Button";
 function ContactRowContent({ children, width }) {
   return (
     <td
-      className={`text-center  px-4 w-48 break-all py-2 align-middle box-border ${width} `}
+      className={`text-center text-sm md:text-base lg:text-lg  px-4 w-48 break-all py-2 align-middle box-border min-w-[150px] max-w-[300px] truncate"${width} `}
     >
       {children}
     </td>
