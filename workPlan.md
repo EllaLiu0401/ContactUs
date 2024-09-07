@@ -13,8 +13,8 @@
 11. Contact List Unit test ✅ 07/09/2024
 12. Contact List page develop ✅ 07/09/2024
 13. Contact List page responsive ✅ 08/09/2024
-14. Add Foot
-15. Add Header
+14. Add Header ✅ 08/09/2024
+15. Add Foot ✅ 08/09/2024
 16. Reafactor code
 17. Readme
 18. Improvement
