@@ -11,7 +11,7 @@ function Button({
 }) {
   return (
     <button
-      className={`w-full text-white my-2 rounded  text-center ${textColor} ${width} ${bgcolor} ${hbgcolor} ${height}`}
+      className={`w-full  my-2 rounded  text-center ${textColor} ${width} ${bgcolor} ${hbgcolor} ${height}`}
       onClick={onClick}
     >
       {children}

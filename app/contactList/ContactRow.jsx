@@ -72,12 +72,13 @@ function ContactRow({ contact, isLast, onDelete }) {
             hbgcolor={isVerified ? "" : "hover:bg-grenen-700"}
             bgcolor={isVerified ? "bg-gray-200" : "bg-green-600"}
             disabled={isVerified}
-            textColor={isVerified ? "text-black" : ""}
+            textColor={isVerified ? "text-black" : "text-white"}
           >
             {isVerified ? "Verified" : "Verify"}
           </Button>
           <Button
             width="w-44"
+            textColor="text-white"
             bgcolor="bg-red-600"
             hbgcolor="hover:bg-red-700"
             height="py-1"
