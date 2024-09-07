@@ -1,6 +1,7 @@
 "use client";
-import ContactTable from "./ContactTable";
 import React, { useState, useEffect } from "react";
+import ContactTable from "./ContactTable";
+import Title from "../utilities/Title";
 
 export default function ContactList() {
   const [contacts, setContacts] = useState([]);
@@ -16,9 +17,7 @@ export default function ContactList() {
   }, []);
   return (
     <div className="px-6 md:px-16 lg:px-24 xl:px-36 py-6 ">
-      <h1 className="text-xl sm:text-2xl md:text-3xl text-left font-bold py-6 ">
-        Contact List
-      </h1>
+      <Title py="py-6">Contact List</Title>
       <ContactTable contacts={contacts} />
     </div>
   );

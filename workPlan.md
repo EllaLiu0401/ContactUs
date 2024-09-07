@@ -12,11 +12,10 @@
 10. Contac List API test ✅ 07/09/2024
 11. Contact List Unit test ✅ 07/09/2024
 12. Contact List page develop ✅ 07/09/2024
-13. Contact List page responsive
+13. Contact List page responsive ✅ 08/09/2024
 14. Add Foot
 15. Add Header
 16. Reafactor code
-17. Docker Setup
-18. Readme
-19. Improvement
-20. Submission
+17. Readme
+18. Improvement
+19. Submission

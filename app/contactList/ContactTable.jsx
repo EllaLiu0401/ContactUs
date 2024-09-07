@@ -19,7 +19,7 @@ export default function ContactTable({ contacts }) {
     <div className="overflow-x-auto">
       <table className="min-w-full bg-gray-100 border table-auto w-full border-collapse  ">
         <thead className="border border-stone-400 border-spacing-0">
-          <ContactTitle />
+          <ContactTitle py="py-6" />
         </thead>
         <tbody className="border border-stone-400 ">
           {contactList.map((contact, index) => (

@@ -1,15 +1,14 @@
 "use client";
-import ContactDetail from "./ContactDetail";
-import ContactForm from "./ContactForm";
-export default function ContactUs() {
+import Title from "../utilities/Title";
+import ContactUs from "./ContactUs";
+export default function Contact() {
   return (
-    <div className="flex flex-col md:flex-row justify-between items-start gap-7 px-6 md:px-16 lg:px-24 xl:px-36 py-6">
-      <div className="w-full md:w-1/2">
-        <ContactDetail />
-      </div>
-      <div className="w-full md:w-1/2">
-        <ContactForm />
-      </div>
+    <div flex>
+      <Title px="px-6 md:px-16 lg:px-24 xl:px-36" py="py-3">
+        {" "}
+        Contact us, we love to hear from you
+      </Title>
+      <ContactUs />
     </div>
   );
 }
