@@ -1,13 +1,13 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ContactList from "../ContactList";
+import ContactList from "../page";
 
 describe("ContactList test", () => {
   beforeEach(() => {
     //mock fetch
     global.fetch = jest.fn((url) => {
-      if (url === "/contacts") {
+      if (url === "http://localhost:9000/contacts") {
         return Promise.resolve({
           json: () =>
             Promise.resolve({
@@ -38,6 +38,7 @@ describe("ContactList test", () => {
       // mock update verify
       if (url.includes("/contacts/1/verify")) {
         return Promise.resolve({
+          ok: true,
           status: 200,
           json: () =>
             Promise.resolve({ message: "Contact marked as verified" }),
@@ -45,8 +46,9 @@ describe("ContactList test", () => {
       }
 
       // mock delete
-      if (url.includes("/contacts/1")) {
+      if (url.includes("http://localhost:9000/contacts/1")) {
         return Promise.resolve({
+          ok: true,
           status: 200,
           json: () =>
             Promise.resolve({ message: "Contact deleted successfully" }),
@@ -97,23 +99,24 @@ describe("ContactList test", () => {
 
   test("check verify contact and update button state", async () => {
     const user = userEvent.setup();
-    render(<ContactList />);
+    await act(async () => {
+      render(<ContactList />);
+    });
 
     await waitFor(() => {
       expect(screen.getByText("Ella")).toBeInTheDocument();
     });
 
-    const verifyButton = screen.getByText("Mark as verified");
+    const verifyButton = screen.getAllByText("Verify")[0];
+
     await user.click(verifyButton);
 
-    await waitFor(() => {
-      expect(global.fetch).toHaveBeenCalledWith(
-        "/contacts/1/verify",
-        expect.objectContaining({ method: "PUT" })
-      );
-    });
-
+    expect(global.fetch).toHaveBeenCalledWith(
+      "http://localhost:9000/contacts/1/verify",
+      expect.objectContaining({ method: "PUT" })
+    );
     // button should be disabled and text should be 'Verified'
+
     expect(verifyButton).toHaveTextContent("Verified");
     expect(verifyButton).toBeDisabled();
   });
@@ -127,11 +130,14 @@ describe("ContactList test", () => {
     });
 
     const deleteButton = screen.getAllByText("Delete")[0];
-    await user.click(deleteButton);
+
+    await act(async () => {
+      await user.click(deleteButton);
+    });
 
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
-        "/contacts/1",
+        "http://localhost:9000/contacts/1",
         expect.objectContaining({ method: "DELETE" })
       );
     });

@@ -8,11 +8,13 @@ function Button({
   bgcolor,
   hbgcolor,
   textColor,
+  disabled,
 }) {
   return (
     <button
       className={`w-full  my-2 rounded  text-center ${textColor} ${width} ${bgcolor} ${hbgcolor} ${height}`}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>

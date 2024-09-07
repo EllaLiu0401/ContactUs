@@ -15,20 +15,22 @@ function ContactRow({ contact, isLast, onDelete }) {
   const [isVerified, setIsVerified] = useState(contact.verified);
 
   // handle verification
-  const handleVerify = () => {
-    fetch(`http://localhost:9000/contacts/${contact.id}/verify`, {
-      method: "PUT",
-    })
-      .then((response) => {
-        if (response.ok) {
-          setIsVerified(true);
-        } else {
-          console.error("Failed to verify contact");
+  const handleVerify = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:9000/contacts/${contact.id}/verify`,
+        {
+          method: "PUT",
         }
-      })
-      .catch((error) => {
-        console.error("Error verifying contact:", error);
-      });
+      );
+      if (response.ok) {
+        setIsVerified(true);
+      } else {
+        console.error("Failed to verify contact");
+      }
+    } catch (error) {
+      console.error("Error verifying contact:", error);
+    }
   };
 
   // handle delete
@@ -69,7 +71,7 @@ function ContactRow({ contact, isLast, onDelete }) {
             width="w-48"
             height="py-1"
             onClick={handleVerify}
-            hbgcolor={isVerified ? "" : "hover:bg-grenen-700"}
+            hbgcolor={isVerified ? "" : "hover:bg-green-700"}
             bgcolor={isVerified ? "bg-gray-200" : "bg-green-600"}
             disabled={isVerified}
             textColor={isVerified ? "text-black" : "text-white"}
