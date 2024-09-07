@@ -21,7 +21,7 @@ app.use(express.json());
 const db = new sqlite3.Database("./contacts.db");
 
 // create new contact
-app.post("/contacts", (req, res) => {
+app.post("/contact", (req, res) => {
   const { first_name, last_name, email, phone, message } = req.body;
 
   if (!first_name || !last_name || !email || !phone || !message) {

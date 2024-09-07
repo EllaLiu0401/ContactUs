@@ -15,7 +15,8 @@
 13. Contact List page responsive ✅ 08/09/2024
 14. Add Header ✅ 08/09/2024
 15. Add Foot ✅ 08/09/2024
-16. Reafactor code
-17. Readme
-18. Improvement
-19. Submission
+16. Docker ✅ 08/09/2024
+17. Reafactor code
+18. Readme
+19. Improvement
+20. Submission
