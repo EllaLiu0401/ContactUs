@@ -1,0 +1,23 @@
+# Use an official Node.js image as the base image
+FROM node:18-alpine
+
+# Install Python, make, g++ (for building native modules), and other dependencies
+RUN apk add --no-cache python3 make g++ py3-pip
+
+# Set the working directory inside the container
+WORKDIR /api
+
+# Copy the package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the port the backend will run on
+EXPOSE 9000
+
+# Start the backend application
+CMD ["node", "index.js"]

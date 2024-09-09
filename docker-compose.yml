@@ -1,13 +1,20 @@
-version: "3.8"
-
 services:
-  app:
-    build: .
+  backend:
+    build:
+      context: ./packages/api
+      dockerfile: Dockerfile.backend
+    ports:
+      - "9000:9000"
+    environment:
+      - NODE_ENV=development
+      - API_HOST_PORT=9000
+      - CLIENT_HOST_URL=http://localhost:3000
+
+  frontend:
+    build:
+      context: ./packages/ui
+      dockerfile: Dockerfile.frontend
     ports:
       - "3000:3000"
-      - "9000:9000"
-    volumes:
-      - .:/app
-      - /app/node_modules
     environment:
-      NODE_ENV: development
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:9000

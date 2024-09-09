@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## OpenAgent Junior Software Engineer Tech Test
 
-## Getting Started
+This client app is built with **React**, **Next.js**, and api is built with **Express.js**, using **SQLite** for data storage.
+Providing docker-compose file for running the app.
 
-First, run the development server:
+### Table of Contents
+
+- [OpenAgent Junior Software Engineer Tech Test](#openagent-junior-software-engineer-tech-test)
+  - [Table of Contents](#table-of-contents)
+  - [Technologies Used](#technologies-used)
+  - [Installation](#installation)
+    - [For backend api](#for-backend-api)
+      - [Running the application](#running-the-application)
+  - [Running with Docker](#running-with-docker)
+  - [Running Tests](#running-tests)
+  - [API Endpoints](#api-endpoints)
+  - [Potential improvements](#potential-improvements)
+
+### Technologies Used
+
+- **Frontend**: Next.js (React), Tailwind CSS
+- **Backend**: node 18, Express.js
+- **Database**: SQLite
+- **Testing**: Jest
+- **Containerization**: Docker, Docker Compose
+- Using npm workspaces to manage the monorepo
+
+### Installation
+
+- Clone the repository:
+
+```bash
+git clone https://github.com/TODO:/contactus.git
+cd contactus
+```
+
+#### For backend api
+
+- Install the dependencies:
+
+```bash
+npm install
+```
+
+- Create the SQLite database:
+
+```bash
+node createDb.js
+```
+
+##### Running the application
+
+- Change .env.dev to .env
+- Start the backend server (Express.js):
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Start the frontend application (Next.js):
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The backend will run on http://localhost:9000 and the frontend will run on http://localhost:3000.
 
-## Learn More
+### Running with Docker
 
-To learn more about Next.js, take a look at the following resources:
+- Build the Docker image:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+docker-compose build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Start the containers:
 
-## Deploy on Vercel
+```bash
+docker-compose up
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Running Tests
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Go to each folder (packages/api, packages/ui) and run the following command to run the tests:
+
+```bash
+npm run test
+```
+
+### API Endpoints
+
+### Potential improvements
+
+- API could be built using webpack to reduce image size
+- Better to use TypeScript for backend Restful API
+- Could use swagger-jsdoc for API documentation
+- UI side could use pagination for loading all contacts
+- PostgreSQL could be easier than sqlite. Because I've never used sqlite before, so trying to
