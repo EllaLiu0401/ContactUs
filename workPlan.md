@@ -17,6 +17,8 @@
 15. Add Foot ✅ 08/09/2024
 16. Docker ✅ 08/09/2024
 17. Reafactor code ✅ 08/09/2024
-18. Readme
-19. Improvement
-20. Submission
+18. Change folder structure ✅ 09/09/2024
+19. Re-Config Docker ✅ 09/09/2024
+20. Readme ✅ 09/09/2024
+21. Improvement ✅ 09/09/2024
+22. Submission ✅ 09/09/2024
