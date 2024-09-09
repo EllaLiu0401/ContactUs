@@ -16,7 +16,7 @@
 14. Add Header ✅ 08/09/2024
 15. Add Foot ✅ 08/09/2024
 16. Docker ✅ 08/09/2024
-17. Reafactor code
+17. Reafactor code ✅ 08/09/2024
 18. Readme
 19. Improvement
 20. Submission
