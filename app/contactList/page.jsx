@@ -8,10 +8,12 @@ import Footer from "../utilities/Footer";
 export default function ContactList() {
   const [contacts, setContacts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:9000/contacts")
-      .then((response) => response.json())
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/contact`)
+      .then((response) => {
+        return response.json();
+      })
       .then((data) => {
-        setContacts(data.data);
+        setContacts(data);
       })
       .catch((error) => {
         console.error("Error fetching contacts:", error);

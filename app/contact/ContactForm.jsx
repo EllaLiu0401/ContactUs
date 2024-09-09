@@ -53,65 +53,73 @@ export default function ContactForm() {
     }
   };
 
-  // handle form submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const validateFields = () => {
     if (!formData.firstName) {
       firstNameRef.current?.focus();
-      return;
+      return false;
     }
 
     if (!formData.lastName) {
       lastNameRef.current?.focus();
-      return;
+      return false;
     }
 
     if (!formData.email || emailError) {
       emailRef.current?.focus();
-      return;
+      return false;
     }
 
     if (!formData.phone || phoneError) {
       phoneRef.current?.focus();
-      return;
+      return false;
     }
 
     if (!formData.message) {
       messageRef.current?.focus();
+      return false;
+    }
+
+    return true;
+  };
+
+  // handle form submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateFields()) {
       return;
     }
-    try {
-      const response = await fetch("http://localhost:9000/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-        }),
-      });
 
-      const contentType = response.headers.get("Content-Type");
-      if (contentType && contentType.includes("application/json")) {
-        const data = await response.json();
-        if (response.ok) {
-          setFormData({
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: "",
-            message: "",
-          });
-          setSubmitted(true);
-        } else {
-          console.error("Error creating contact:", data.error);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/contact`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
+            message: formData.message,
+          }),
         }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+        setSubmitted(true);
       } else {
-        console.error("Expected JSON response but got:", contentType);
+        console.error("Error creating contact:", data.error);
       }
     } catch (error) {
       console.error("Network error:", error);
@@ -120,6 +128,7 @@ export default function ContactForm() {
   if (submitted) {
     return <ContactThankyou />;
   }
+
   return (
     <div className="bg-gray-100 min-h-lvh p-10 ">
       <p className="text-base font-medium mb-4">

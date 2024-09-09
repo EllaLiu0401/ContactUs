@@ -18,7 +18,7 @@ function ContactRow({ contact, isLast, onDelete }) {
   const handleVerify = async () => {
     try {
       const response = await fetch(
-        `http://localhost:9000/contacts/${contact.id}/verify`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/contact/${contact.id}/verify`,
         {
           method: "PUT",
         }
@@ -37,7 +37,7 @@ function ContactRow({ contact, isLast, onDelete }) {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:9000/contacts/${contact.id}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/contact/${contact.id}`,
         {
           method: "DELETE",
         }
@@ -55,8 +55,8 @@ function ContactRow({ contact, isLast, onDelete }) {
         isLast ? "border-b border-gray-400" : "border-b border-gray-200"
       }`}
     >
-      <ContactRowContent>{contact.first_name}</ContactRowContent>
-      <ContactRowContent>{contact.last_name}</ContactRowContent>
+      <ContactRowContent>{contact.firstName}</ContactRowContent>
+      <ContactRowContent>{contact.lastName}</ContactRowContent>
       <ContactRowContent>{contact.email}</ContactRowContent>
       <ContactRowContent>{contact.phone}</ContactRowContent>
       <ContactRowContent width="w-96">{contact.message}</ContactRowContent>
