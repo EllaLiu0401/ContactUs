@@ -8,12 +8,12 @@ export default function Contact() {
   return (
     <div>
       <Header />
-      <div>
+      <main>
         <Title px="px-6 md:px-16 lg:px-24 xl:px-36" py="pt-10">
           Contact us, we love to hear from you
         </Title>
         <ContactUs />
-      </div>
+      </main>
       <Footer />
     </div>
   );

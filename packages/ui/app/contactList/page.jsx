@@ -23,10 +23,10 @@ export default function ContactList() {
   return (
     <div>
       <Header />
-      <div className="px-6 md:px-16 lg:px-24 xl:px-36 pt-10">
+      <main className="px-6 md:px-16 lg:px-24 xl:px-36 pt-10">
         <Title>Contact List</Title>
         <ContactTable contacts={contacts} />
-      </div>
+      </main>
       <Footer />
     </div>
   );
