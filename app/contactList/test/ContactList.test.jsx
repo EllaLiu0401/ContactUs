@@ -4,39 +4,37 @@ import userEvent from "@testing-library/user-event";
 import ContactList from "../page";
 
 describe("ContactList test", () => {
+  // mock fetch
   beforeEach(() => {
-    //mock fetch
     global.fetch = jest.fn((url) => {
-      if (url === "http://localhost:9000/contacts") {
+      if (url === `${process.env.NEXT_PUBLIC_API_BASE_URL}/contact`) {
         return Promise.resolve({
           json: () =>
-            Promise.resolve({
-              data: [
-                {
-                  id: 1,
-                  first_name: "Ella",
-                  last_name: "Liu",
-                  email: "ellatong0515@gmail.com",
-                  phone: "0412345678",
-                  message: "Test note1",
-                  verified: 0,
-                },
-                {
-                  id: 2,
-                  first_name: "Vicent",
-                  last_name: "Hu",
-                  email: "vincenttt@example.com",
-                  phone: "0412345679",
-                  message: "Test note2",
-                  verified: 1,
-                },
-              ],
-            }),
+            Promise.resolve([
+              {
+                id: 1,
+                firstName: "Ella",
+                lastName: "Liu",
+                email: "ellatong0515@gmail.com",
+                phone: "0412345678",
+                message: "Test note1",
+                verified: 0,
+              },
+              {
+                id: 2,
+                firstName: "Vicent",
+                lastName: "Hu",
+                email: "vincenttt@example.com",
+                phone: "0412345679",
+                message: "Test note2",
+                verified: 1,
+              },
+            ]),
         });
       }
 
       // mock update verify
-      if (url.includes("/contacts/1/verify")) {
+      if (url.includes("/contact/1/verify")) {
         return Promise.resolve({
           ok: true,
           status: 200,
@@ -46,7 +44,7 @@ describe("ContactList test", () => {
       }
 
       // mock delete
-      if (url.includes("http://localhost:9000/contacts/1")) {
+      if (url.includes(`${process.env.NEXT_PUBLIC_API_BASE_URL}/contact/1`)) {
         return Promise.resolve({
           ok: true,
           status: 200,
@@ -112,7 +110,7 @@ describe("ContactList test", () => {
     await user.click(verifyButton);
 
     expect(global.fetch).toHaveBeenCalledWith(
-      "http://localhost:9000/contacts/1/verify",
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/contact/1/verify`,
       expect.objectContaining({ method: "PUT" })
     );
     // button should be disabled and text should be 'Verified'
@@ -137,7 +135,7 @@ describe("ContactList test", () => {
 
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
-        "http://localhost:9000/contacts/1",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/contact/1`,
         expect.objectContaining({ method: "DELETE" })
       );
     });

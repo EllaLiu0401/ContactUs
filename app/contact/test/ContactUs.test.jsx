@@ -319,13 +319,13 @@ describe("ContactForm test", () => {
     await user.click(submitButton);
 
     expect(global.fetch).toHaveBeenCalledWith(
-      "http://localhost:9000/contact",
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/contact`,
       expect.objectContaining({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          first_name: "testFirst",
-          last_name: "testLast",
+          firstName: "testFirst",
+          lastName: "testLast",
           email: "ellatest@gmail.com",
           phone: "0421839976",
           message: "testMessage",
