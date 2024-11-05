@@ -1,4 +1,4 @@
-## OpenAgent Junior Software Engineer Tech Test
+## Junior Software Engineer Tech Test
 
 This client app is built with **React**, **Next.js**, and api is built with **Express.js**, using **SQLite** for data storage.
 Providing **docker-compose** file for running the app.
